@@ -7,7 +7,7 @@ let pokemonList = [
 
     {
         name: 'Charmander',
-        height: 0.6,
+        height: 1.6,
         types: ['fire']
     },
 
@@ -17,3 +17,14 @@ let pokemonList = [
         types: ['water']
     }
 ];
+
+for(let i = 0; i < 3; i++)
+{
+    let pokeInfo = pokemonList[i].name + '(height: ' + pokemonList[i].height + ')';
+    if(pokemonList[i].height > 1)
+    {
+        pokeInfo += ' - Wow, that\'s big!';
+    }
+    pokeInfo += '<br><br>'
+    document.write(pokeInfo);
+}
