@@ -18,13 +18,19 @@ let pokemonList = [
     }
 ];
 
-for(let i = 0; i < 3; i++)
+
+function displayPokeArray (list)
 {
-    let pokeInfo = pokemonList[i].name + '(height: ' + pokemonList[i].height + ')';
-    if(pokemonList[i].height > 1)
+    for(let i = 0; i < list.length; i++)
     {
-        pokeInfo += ' - Wow, that\'s big!';
+        let pokeInfo = list[i].name + '(height: ' + list[i].height + ')';
+        if(list[i].height > 1)
+        {
+            pokeInfo += ' - Wow, that\'s big!';
+        }
+        pokeInfo += '<br><br>'
+        document.write(pokeInfo);
     }
-    pokeInfo += '<br><br>'
-    document.write(pokeInfo);
 }
+
+displayPokeArray(pokemonList);
