@@ -42,16 +42,12 @@ let pokemonRepository = (function () {
         button.innerText = pokemon.name;
         button.classList.add('poke-button');
         button.addEventListener('click', function() {
-            showDetails(pokemon);
+            loadDetails(pokemon).then(function () {
+                console.log(pokemon);
+            });
         });
         listItem.appendChild(button);
         pokeUL.appendChild(listItem);
-    }
-
-    function showDetails(pokemon) {
-        loadDetails(pokemon).then(function () {
-            console.log(pokemon);
-        });
     }
 
     function searchName(pokeName) {
@@ -70,7 +66,7 @@ let pokemonRepository = (function () {
             json.results.forEach(function (item) {
                 let pokemon = {
                     name: item.name,
-                    datailsUrl: item.url
+                    detailsUrl: item.url
                 };
                 add(pokemon);
             });
@@ -82,8 +78,7 @@ let pokemonRepository = (function () {
     // item, in this case, is a pokemon, which this function receives from the buttons we hooked up in a previous exercise that call showDetails
     function loadDetails(item) {
         // detailsUrl comes from the pokemon object returned by the API 
-        // (note: the exercise refers to it as detailsUrl, but for some reason the actual key name from the API is datailsUrl)
-        let url = item.datailsUrl; 
+        let url = item.detailsUrl; 
         return fetch(url).then(function (response) {
             return response.json();
         }).then(function (details) {
@@ -99,7 +94,6 @@ let pokemonRepository = (function () {
         add: add,
         addv : addv,
         addListItem: addListItem,
-        showDetails: showDetails,
         searchName: searchName,
         loadList: loadList,
         loadDetails: loadDetails,
