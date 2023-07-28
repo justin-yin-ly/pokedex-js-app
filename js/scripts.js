@@ -1,23 +1,6 @@
 let pokemonRepository = (function () {
-    let pokemonList = [
-        {
-            name: 'Bulbasaur',
-            height: 0.7,
-            types: ['grass','poison']
-        },
-
-        {
-            name: 'Charmander',
-            height: 1.6,
-            types: ['fire']
-        },
-
-        {
-            name: 'Squirtle',
-            height: 0.5,
-            types: ['water']
-        }
-    ];
+    let pokemonList = [];
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
     function add(pokemon) {
         pokemonList.push(pokemon);
@@ -66,16 +49,50 @@ let pokemonRepository = (function () {
     }
 
     function showDetails(pokemon) {
-        console.log(pokemon);
+        loadDetails(pokemon).then(function () {
+            console.log(pokemon);
+        });
     }
 
     function searchName(pokeName) {
         return pokemonList.filter(pokemon => pokemon.name === pokeName);
     }
 
-    function getAll()
-    {
+    function getAll() {
         return pokemonList;
+    }
+
+    function loadList() {
+        // fetches information from the url we set above, then returns a parsed json object
+        return fetch(apiUrl).then(function (response) {
+            return response.json();
+        }).then(function (json) { // the parsed json is then fed into a chained promise that adds a new pokemon object for each object found in the json
+            json.results.forEach(function (item) {
+                let pokemon = {
+                    name: item.name,
+                    datailsUrl: item.url
+                };
+                add(pokemon);
+            });
+        }).catch(function (e) {
+            console.error(e);
+        })
+    }
+    
+    // item, in this case, is a pokemon, which this function receives from the buttons we hooked up in a previous exercise that call showDetails
+    function loadDetails(item) {
+        // detailsUrl comes from the pokemon object returned by the API 
+        // (note: the exercise refers to it as detailsUrl, but for some reason the actual key name from the API is datailsUrl)
+        let url = item.datailsUrl; 
+        return fetch(url).then(function (response) {
+            return response.json();
+        }).then(function (details) {
+            item.imageUrl = details.sprites.front_default;
+            item.height = details.height;
+            item.types = details.types;
+        }).catch(function (e) {
+            console.error(e);
+        });
     }
 
     return {
@@ -84,16 +101,14 @@ let pokemonRepository = (function () {
         addListItem: addListItem,
         showDetails: showDetails,
         searchName: searchName,
+        loadList: loadList,
+        loadDetails: loadDetails,
         getAll: getAll
     };
 })();
 
-
-function displayPokeArray (list)
-{
-    list.forEach(function(pokemon) {
+pokemonRepository.loadList().then(function() {
+    pokemonRepository.getAll().forEach(function(pokemon){
         pokemonRepository.addListItem(pokemon);
     });
-}
-
-displayPokeArray(pokemonRepository.getAll());
+});
