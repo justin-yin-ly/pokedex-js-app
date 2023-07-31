@@ -19,7 +19,7 @@ body {
     font-weight: 300;
     font-size: 20px;
     line-height: 1.2;
-    background-color:var(--background-color);
+    background:var(--background-color);
 }
 
 h1 {
@@ -33,7 +33,7 @@ h1 {
     width: var(--pokebutton-size);
     font-size: 16px;
     font-family: inherit;
-    background-color: var(--secondary-color);
+    background: var(--secondary-color);
     border-radius: 4px;
     padding: 8px;
     margin: 5px 0px;
@@ -51,4 +51,57 @@ h1 {
 .pokemon-list > li {
     max-width: var(--pokebutton-size);
     margin: var(--margin-center);
+}
+
+#modal-container {
+    display: none;
+}
+
+#modal-container.is-visible {
+    position: fixed;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+
+    overflow: auto;
+    z-index: 999;
+
+    display: grid;
+    text-align: center;
+}
+
+.modal {
+    width: 700px;
+    background: var(--grid-background-color);
+    margin: 100px auto;
+    display: inline-block;
+}
+
+.modal > img {
+    width: 150px;
+}
+
+.modal-close {
+    font-family: inherit;
+    font-size: 16px;
+    background: none;
+    border: 0;
+    text-decoration: underline;
+    margin: var(--spacing-small);
+    padding: 5px;
+}
+
+/* media queries to account for responsive design*/
+@media all and (max-width: 500px) {
+    .modal {
+        width: 80%;
+        height: 70%;
+    }
+
+    .poke-button {
+        width: 150px;
+    }
 }

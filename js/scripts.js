@@ -43,7 +43,7 @@ let pokemonRepository = (function () {
         button.classList.add('poke-button');
         button.addEventListener('click', function() {
             loadDetails(pokemon).then(function () {
-                console.log(pokemon);
+                showModal(pokemon.imageUrl, pokemon.name, 'Height: ' + pokemon.height);
             });
         });
         listItem.appendChild(button);
@@ -106,3 +106,52 @@ pokemonRepository.loadList().then(function() {
         pokemonRepository.addListItem(pokemon);
     });
 });
+
+function showModal(spriteUrl, title, text) {
+    let modalContainer = document.querySelector('#modal-container');
+  
+    modalContainer.innerText = '';
+    
+    let modal = document.createElement('div');
+    modal.classList.add('modal');
+  
+    let spriteElement = document.createElement('img');
+    spriteElement.src = spriteUrl;
+
+    let titleElement = document.createElement('h1');
+    titleElement.innerText = title;
+  
+    let contentElement = document.createElement('p');
+    contentElement.innerText = text;
+  
+    let closeButtonElement = document.createElement('button');
+    closeButtonElement.classList.add('modal-close');
+    closeButtonElement.innerText = 'Close';
+    closeButtonElement.addEventListener('click', hideModal)
+
+    modal.appendChild(spriteElement);
+    modal.appendChild(titleElement);
+    modal.appendChild(contentElement);
+    modal.appendChild(closeButtonElement);
+    modalContainer.appendChild(modal);
+  
+    modalContainer.classList.add('is-visible');
+    modalContainer.addEventListener('click', (e) => {
+      let target = e.target;
+      if (target === modalContainer) {
+        hideModal();
+      }
+    });
+  }
+  
+  function hideModal() {
+    let modalContainer = document.querySelector('#modal-container');
+    modalContainer.classList.remove('is-visible');
+  }
+  
+  window.addEventListener('keydown', (e) => {
+    let modalContainer = document.querySelector('#modal-container');
+    if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+      hideModal();
+    }
+  })
