@@ -75,9 +75,11 @@ h1 {
 
 .modal {
     width: 700px;
+    padding: var(--spacing-small);
     background: var(--grid-background-color);
     margin: 100px auto;
     display: inline-block;
+    height: fit-content;
 }
 
 .modal > img {
@@ -98,7 +100,6 @@ h1 {
 @media all and (max-width: 500px) {
     .modal {
         width: 80%;
-        height: 70%;
     }
 
     .poke-button {
