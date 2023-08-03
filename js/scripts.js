@@ -36,18 +36,20 @@ let pokemonRepository = (function () {
     }
 
     function addListItem(pokemon) {
-        let pokeUL = document.querySelector('.pokemon-list');
-        let listItem = document.createElement('li');
-        let button = document.createElement('button');
-        button.innerText = pokemon.name;
-        button.classList.add('poke-button');
-        button.addEventListener('click', function() {
+        let listItem = $('<li class="list-group-item"></li>');
+        let button = $('<button class="poke-button btn btn-primary" data-toggle="modal" data-target="#modal-container"></button');
+        let capitalizedName = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+        button.text(capitalizedName);
+        button.on('click', function() {
+            $('#modal-label').text(capitalizedName);
             loadDetails(pokemon).then(function () {
-                showModal(pokemon.imageUrl, pokemon.name, 'Height: ' + pokemon.height);
+                $('.sprite').attr("src", pokemon.imageUrl);
+                $('.details').text('Height: ' + pokemon.height);
             });
+            
         });
-        listItem.appendChild(button);
-        pokeUL.appendChild(listItem);
+        listItem.append(button);
+        $('.pokemon-list').append(listItem);
     }
 
     function searchName(pokeName) {
@@ -57,48 +59,6 @@ let pokemonRepository = (function () {
     function getAll() {
         return pokemonList;
     }
-
-    function showModal(spriteUrl, title, text) {
-        let modalContainer = document.querySelector('#modal-container');
-      
-        modalContainer.innerText = '';
-        
-        let modal = document.createElement('div');
-        modal.classList.add('modal');
-      
-        let spriteElement = document.createElement('img');
-        spriteElement.src = spriteUrl;
-    
-        let titleElement = document.createElement('h1');
-        titleElement.innerText = title;
-      
-        let contentElement = document.createElement('p');
-        contentElement.innerText = text;
-      
-        let closeButtonElement = document.createElement('button');
-        closeButtonElement.classList.add('modal-close');
-        closeButtonElement.innerText = 'Close';
-        closeButtonElement.addEventListener('click', hideModal)
-    
-        modal.appendChild(spriteElement);
-        modal.appendChild(titleElement);
-        modal.appendChild(contentElement);
-        modal.appendChild(closeButtonElement);
-        modalContainer.appendChild(modal);
-      
-        modalContainer.classList.add('is-visible');
-        modalContainer.addEventListener('click', (e) => {
-          let target = e.target;
-          if (target === modalContainer) {
-            hideModal();
-          }
-        });
-      }
-      
-      function hideModal() {
-        let modalContainer = document.querySelector('#modal-container');
-        modalContainer.classList.remove('is-visible');
-      }    
 
     function loadList() {
         // fetches information from the url we set above, then returns a parsed json object

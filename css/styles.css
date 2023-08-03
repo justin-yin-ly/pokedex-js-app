@@ -23,6 +23,8 @@ body {
 }
 
 h1 {
+    color: var(--grid-background-color);
+    padding-right: var(--spacing-small);
     font-weight: 700;
     font-size: 32px;
     text-align: center;
@@ -30,6 +32,7 @@ h1 {
 }
 
 .poke-button {
+    color: black;
     width: var(--pokebutton-size);
     font-size: 16px;
     font-family: inherit;
@@ -53,56 +56,49 @@ h1 {
     margin: var(--margin-center);
 }
 
-#modal-container {
-    display: none;
-}
-
-#modal-container.is-visible {
-    position: fixed;
-    box-sizing: border-box;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-
-    overflow: auto;
-    z-index: 999;
-
-    display: grid;
-    text-align: center;
-}
-
-.modal {
-    width: 700px;
-    padding: var(--spacing-small);
-    background: var(--grid-background-color);
-    margin: 100px auto;
-    display: inline-block;
-    height: fit-content;
-}
-
-.modal > img {
-    width: 150px;
-}
-
-.modal-close {
-    font-family: inherit;
-    font-size: 16px;
-    background: none;
-    border: 0;
-    text-decoration: underline;
-    margin: var(--spacing-small);
-    padding: 5px;
-}
-
 /* media queries to account for responsive design*/
 @media all and (max-width: 500px) {
-    .modal {
-        width: 80%;
-    }
-
     .poke-button {
         width: 150px;
     }
+
+    .nav-link {
+        font-size: 18px;
+    }
+}
+
+.list-group-item {
+    background: none;
+    border: none;
+    padding-left: 0px;
+}
+
+.navbar {
+    background: var(--primary-color);
+}
+
+.nav-link, .nav-link:hover {
+    color: var(--grid-background-color);
+}
+
+.modal-content {
+    margin-top: 150px;
+    background: var(--secondary-color);
+    border: 1px solid black;
+}
+
+#modal-title {
+    margin: var(--margin-center);
+}
+
+.modal-body {
+    margin: var(--margin-center);
+}
+
+.modal-body > img {
+    width: 150px;
+}
+
+.modal-body > p {
+    text-align: center;
 }
