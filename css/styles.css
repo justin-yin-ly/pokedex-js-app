@@ -45,6 +45,7 @@ h1 {
 .pokemon-list {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     padding-left: 0px;
     list-style-type: none;
     max-width: 800px;
@@ -54,17 +55,6 @@ h1 {
 .pokemon-list > li {
     max-width: var(--pokebutton-size);
     margin: var(--margin-center);
-}
-
-/* media queries to account for responsive design*/
-@media all and (max-width: 500px) {
-    .poke-button {
-        width: 150px;
-    }
-
-    .nav-link {
-        font-size: 18px;
-    }
 }
 
 .list-group-item {
@@ -101,4 +91,39 @@ h1 {
 
 .modal-body > p {
     text-align: center;
+}
+
+#modal-poke-number {
+    margin-bottom: 0px;
+    margin-top: 3px;
+    padding-right: var(--spacing-small);
+    height: 30px;
+    font-weight: 700;
+    text-align: end;
+}
+
+/* 
+    For some reason, there was a padding-right of 15px applied to these items
+    I don't know where it came from, but I added these style rules to account
+    for it, because otherwise my content would be off center
+*/
+.pokemon-list, .list-group-item {
+    padding-right: 0px;
+}
+
+/* media queries to account for responsive design*/
+@media all and (max-width: 500px) {
+    .poke-button {
+        width: 150px;
+    }
+
+    .nav-link {
+        font-size: 18px;
+    }
+}
+
+@media all and (max-height: 430px) {
+    .modal-content {
+        margin-top: 0px;
+    }
 }

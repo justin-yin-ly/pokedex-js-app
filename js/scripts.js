@@ -45,6 +45,7 @@ let pokemonRepository = (function () {
             loadDetails(pokemon).then(function () {
                 $('.sprite').attr("src", pokemon.imageUrl);
                 $('.details').text('Height: ' + pokemon.height);
+                $('#modal-poke-number').text('#' + pokemon.id);
             });
             
         });
@@ -66,9 +67,22 @@ let pokemonRepository = (function () {
             return response.json();
         }).then(function (json) { // the parsed json is then fed into a chained promise that adds a new pokemon object for each object found in the json
             json.results.forEach(function (item) {
+                let test;
+                (function(){ 
+                    fetch(item.url).then(function (response){
+                        return response.json();
+                    }).then(function (details) {
+                        //console.log(details.id);
+                        test = details.id;                           
+                    }).catch(function (e) {
+                        console.error(e);
+                    });   
+                })();
+                console.log(test);
                 let pokemon = {
                     name: item.name,
-                    detailsUrl: item.url
+                    detailsUrl: item.url,
+                    id: test
                 };
                 add(pokemon);
             });
@@ -81,12 +95,14 @@ let pokemonRepository = (function () {
     function loadDetails(item) {
         // detailsUrl comes from the pokemon object returned by the API 
         let url = item.detailsUrl; 
+        // fetch requests information from the url we feed it/the detailsUrl from the pokemon
         return fetch(url).then(function (response) {
             return response.json();
         }).then(function (details) {
             item.imageUrl = details.sprites.front_default;
             item.height = details.height;
             item.types = details.types;
+            item.id = details.id;
         }).catch(function (e) {
             console.error(e);
         });
